@@ -1,0 +1,471 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--color-background-tertiary)}
+.app{min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.logo{font-size:15px;font-weight:500;color:var(--color-text-primary);display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:#1D9E75}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.store-badge{font-size:12px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:4px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary)}
+.avatar{width:28px;height:28px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#0F6E56}
+.layout{display:flex;flex:1}
+.sidebar{width:200px;background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);padding:16px 12px;display:flex;flex-direction:column;gap:4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--border-radius-md);cursor:pointer;font-size:13px;color:var(--color-text-secondary);transition:all 0.15s}
+.nav-item:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-item.active{background:#E1F5EE;color:#0F6E56;font-weight:500}
+.nav-item i{font-size:16px}
+.nav-section{font-size:11px;color:var(--color-text-tertiary);padding:12px 10px 4px;letter-spacing:0.04em}
+.main{flex:1;padding:24px;overflow:auto}
+.page{display:none}
+.page.active{display:block}
+.page-title{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.page-sub{font-size:13px;color:var(--color-text-secondary);margin-bottom:24px}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.metric-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:16px}
+.metric-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:6px}
+.metric-value{font-size:24px;font-weight:500;color:var(--color-text-primary)}
+.metric-sub{font-size:12px;color:var(--color-text-tertiary);margin-top:4px;display:flex;align-items:center;gap:4px}
+.up{color:#1D9E75}.down{color:#E24B4A}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px}
+.card-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.card-title-left{display:flex;align-items:center;gap:8px}
+.badge{font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md)}
+.badge-green{background:#E1F5EE;color:#0F6E56}
+.badge-amber{background:#FAEEDA;color:#854F0B}
+.badge-red{background:#FCEBEB;color:#A32D2D}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bar-label{font-size:12px;color:var(--color-text-secondary);width:60px;text-align:right}
+.bar-track{flex:1;height:8px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width 0.6s ease}
+.bar-val{font-size:12px;color:var(--color-text-secondary);width:36px}
+.event-list{display:flex;flex-direction:column;gap:10px}
+.event-item{display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:var(--border-radius-md);background:var(--color-background-secondary)}
+.event-icon{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.ei-mirror{background:#E1F5EE;color:#0F6E56}
+.ei-pay{background:#E1F5EE;color:#0F6E56}
+.ei-warn{background:#FAEEDA;color:#854F0B}
+.ei-alert{background:#FCEBEB;color:#A32D2D}
+.event-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.event-time{font-size:11px;color:var(--color-text-tertiary)}
+.mirror-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.mirror-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px;text-align:center}
+.mirror-icon{font-size:20px;color:#1D9E75;margin-bottom:6px}
+.mirror-name{font-size:12px;color:var(--color-text-secondary);margin-bottom:8px}
+.mirror-status{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md)}
+.ms-on{background:#E1F5EE;color:#0F6E56}
+.ms-off{background:var(--color-background-tertiary);color:var(--color-text-tertiary)}
+.progress-section{margin-bottom:20px}
+.prog-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.prog-label{font-size:13px;color:var(--color-text-primary);font-weight:500}
+.prog-val{font-size:13px;color:var(--color-text-secondary)}
+.prog-track{height:10px;background:var(--color-background-secondary);border-radius:5px;overflow:hidden}
+.prog-fill{height:100%;border-radius:5px;background:#1D9E75;transition:width 0.8s ease}
+.stamp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.stamp{width:100%;aspect-ratio:1;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:18px}
+.stamp-filled{background:#E1F5EE;border-color:#9FE1CB}
+.stamp-empty{background:var(--color-background-secondary)}
+.user-table{width:100%;border-collapse:collapse}
+.user-table th{font-size:12px;color:var(--color-text-tertiary);font-weight:400;text-align:left;padding:8px 10px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.user-table td{font-size:13px;color:var(--color-text-primary);padding:10px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.user-table tr:last-child td{border-bottom:none}
+.rank-badge{width:20px;height:20px;border-radius:50%;background:var(--color-background-secondary);display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:var(--color-text-secondary)}
+.rank-1{background:#FAEEDA;color:#854F0B}
+.rank-2{background:#E6F1FB;color:#185FA5}
+.rank-3{background:#E1F5EE;color:#0F6E56}
+.hypo-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:12px;background:var(--color-background-primary)}
+.hypo-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.hypo-num{width:24px;height:24px;border-radius:50%;background:#E1F5EE;color:#0F6E56;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hypo-title{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.gauge-row{display:flex;align-items:center;gap:12px}
+.gauge-track{flex:1;height:12px;background:var(--color-background-secondary);border-radius:6px;overflow:hidden}
+.gauge-fill{height:100%;border-radius:6px;transition:width 1s ease}
+.gauge-green{background:#1D9E75}
+.gauge-amber{background:#EF9F27}
+.gauge-red{background:#E24B4A}
+.gauge-info{font-size:12px;color:var(--color-text-secondary);min-width:80px;text-align:right}
+.target-line{font-size:11px;color:var(--color-text-tertiary);margin-top:4px}
+.sus-ring{display:flex;align-items:center;justify-content:center;margin:12px 0}
+.tab-group{display:flex;gap:4px;margin-bottom:16px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tab{padding:8px 16px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-0.5px;transition:all 0.15s}
+.tab.active{color:#1D9E75;border-bottom-color:#1D9E75;font-weight:500}
+.alert-banner{background:#FAEEDA;border:0.5px solid #FAC775;border-radius:var(--border-radius-md);padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:13px;color:#854F0B}
+</style>
+
+<div class="app">
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      무인매장 관리 대시보드
+    </div>
+    <div class="topbar-right">
+      <div class="store-badge"><i class="ti ti-building-store" style="font-size:13px;vertical-align:-1px;margin-right:4px" aria-hidden="true"></i>서울점 1호</div>
+      <div class="avatar">김</div>
+    </div>
+  </div>
+  <div class="layout">
+    <div class="sidebar">
+      <div class="nav-section">메인</div>
+      <div class="nav-item active" onclick="navigate('overview',this)"><i class="ti ti-layout-dashboard"></i>개요</div>
+      <div class="nav-item" onclick="navigate('mirror',this)"><i class="ti ti-mirror"></i>거울 모니터링</div>
+      <div class="nav-item" onclick="navigate('points',this)"><i class="ti ti-star"></i>포인트 현황</div>
+      <div class="nav-section">분석</div>
+      <div class="nav-item" onclick="navigate('members',this)"><i class="ti ti-users"></i>회원 관리</div>
+      <div class="nav-item" onclick="navigate('research',this)"><i class="ti ti-clipboard-data"></i>실험 검증</div>
+      <div class="nav-section">설정</div>
+      <div class="nav-item" onclick="navigate('settings',this)"><i class="ti ti-settings"></i>설정</div>
+    </div>
+    <div class="main">
+
+      <!-- 개요 -->
+      <div class="page active" id="page-overview">
+        <div class="page-title">오늘의 매장 현황</div>
+        <div class="page-sub">2025년 6월 2일 월요일 · 실시간 업데이트</div>
+        <div class="alert-banner">
+          <i class="ti ti-alert-triangle" style="font-size:16px" aria-hidden="true"></i>
+          오늘 오후 2시 34분 카운터 구역에서 결제 없이 이탈한 고객이 감지되었습니다.
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">오늘 방문자</div>
+            <div class="metric-value">47</div>
+            <div class="metric-sub"><span class="up"><i class="ti ti-arrow-up" style="font-size:11px"></i> +12%</span> 어제 대비</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">정직 결제율</div>
+            <div class="metric-value">94.2%</div>
+            <div class="metric-sub"><span class="up"><i class="ti ti-arrow-up" style="font-size:11px"></i> +3.1%p</span> 지난주 대비</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">포인트 적립 건</div>
+            <div class="metric-value">31</div>
+            <div class="metric-sub"><span class="up">66%</span> 방문 대비 적립률</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">거울 감지 효과</div>
+            <div class="metric-value">8</div>
+            <div class="metric-sub"><span style="color:var(--color-text-tertiary)">자기인식 발동 추정 건</span></div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">
+              <div class="card-title-left"><i class="ti ti-clock" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i>시간대별 방문 현황</div>
+            </div>
+            <div id="bar-chart-container">
+              <div class="bar-row"><span class="bar-label">10시</span><div class="bar-track"><div class="bar-fill" style="width:30%;background:#5DCAA5"></div></div><span class="bar-val">14명</span></div>
+              <div class="bar-row"><span class="bar-label">12시</span><div class="bar-track"><div class="bar-fill" style="width:80%;background:#1D9E75"></div></div><span class="bar-val">37명</span></div>
+              <div class="bar-row"><span class="bar-label">14시</span><div class="bar-track"><div class="bar-fill" style="width:65%;background:#1D9E75"></div></div><span class="bar-val">30명</span></div>
+              <div class="bar-row"><span class="bar-label">16시</span><div class="bar-track"><div class="bar-fill" style="width:45%;background:#5DCAA5"></div></div><span class="bar-val">21명</span></div>
+              <div class="bar-row"><span class="bar-label">18시</span><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1D9E75"></div></div><span class="bar-val">42명</span></div>
+              <div class="bar-row"><span class="bar-label">20시</span><div class="bar-track"><div class="bar-fill" style="width:50%;background:#5DCAA5"></div></div><span class="bar-val">23명</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              <div class="card-title-left"><i class="ti ti-bell" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i>최근 이벤트</div>
+            </div>
+            <div class="event-list">
+              <div class="event-item">
+                <div class="event-icon ei-pay"><i class="ti ti-receipt" aria-hidden="true"></i></div>
+                <div><div class="event-title">포인트 쿠폰 사용 결제</div><div class="event-time">14:52 · 회원 ID 2847</div></div>
+              </div>
+              <div class="event-item">
+                <div class="event-icon ei-warn"><i class="ti ti-alert-circle" aria-hidden="true"></i></div>
+                <div><div class="event-title">미결제 이탈 의심 고객</div><div class="event-time">14:34 · 카운터 구역 C</div></div>
+              </div>
+              <div class="event-item">
+                <div class="event-icon ei-mirror"><i class="ti ti-mirror" aria-hidden="true"></i></div>
+                <div><div class="event-title">거울 C3 구역 작동 확인</div><div class="event-time">13:10 · 자동 점검 완료</div></div>
+              </div>
+              <div class="event-item">
+                <div class="event-icon ei-pay"><i class="ti ti-star" aria-hidden="true"></i></div>
+                <div><div class="event-title">스탬프 10회 달성 → 보상 지급</div><div class="event-time">12:18 · 회원 ID 1193</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 거울 모니터링 -->
+      <div class="page" id="page-mirror">
+        <div class="page-title">거울 설치 모니터링</div>
+        <div class="page-sub">자기인식 환경설계 · 설치 현황 및 효과 추적</div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">설치된 거울 수</div>
+            <div class="metric-value">6</div>
+            <div class="metric-sub">5개 구역 커버</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">정상 작동</div>
+            <div class="metric-value">5 / 6</div>
+            <div class="metric-sub"><span class="down">1개 점검 필요</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">거울 후 결제 전환</div>
+            <div class="metric-value">+8.3%</div>
+            <div class="metric-sub"><span class="up">거울 없는 구역 대비</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">이달 절도 의심</div>
+            <div class="metric-value">2건</div>
+            <div class="metric-sub"><span class="up">지난달 7건 대비 감소</span></div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title"><div class="card-title-left"><i class="ti ti-map-2" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i>구역별 거울 설치 현황</div></div>
+          <div class="mirror-grid">
+            <div class="mirror-card">
+              <div class="mirror-icon"><i class="ti ti-door-enter" aria-hidden="true"></i></div>
+              <div class="mirror-name">입구 A1</div>
+              <div class="mirror-status ms-on"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i>정상</div>
+            </div>
+            <div class="mirror-card">
+              <div class="mirror-icon"><i class="ti ti-shopping-cart" aria-hidden="true"></i></div>
+              <div class="mirror-name">상품 진열 B2</div>
+              <div class="mirror-status ms-on"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i>정상</div>
+            </div>
+            <div class="mirror-card">
+              <div class="mirror-icon"><i class="ti ti-cash-register" aria-hidden="true"></i></div>
+              <div class="mirror-name">계산대 C3</div>
+              <div class="mirror-status" style="background:#FAEEDA;color:#854F0B"><i class="ti ti-alert-circle" style="font-size:11px" aria-hidden="true"></i>점검 필요</div>
+            </div>
+            <div class="mirror-card">
+              <div class="mirror-icon"><i class="ti ti-arrows-left-right" aria-hidden="true"></i></div>
+              <div class="mirror-name">주동선 D1</div>
+              <div class="mirror-status ms-on"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i>정상</div>
+            </div>
+            <div class="mirror-card">
+              <div class="mirror-icon"><i class="ti ti-corner-down-right" aria-hidden="true"></i></div>
+              <div class="mirror-name">코너 E2</div>
+              <div class="mirror-status ms-on"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i>정상</div>
+            </div>
+            <div class="mirror-card">
+              <div class="mirror-icon"><i class="ti ti-door-exit" aria-hidden="true"></i></div>
+              <div class="mirror-name">출구 F1</div>
+              <div class="mirror-status ms-on"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i>정상</div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title"><div class="card-title-left">구역별 자기인식 발동 추정 수</div></div>
+            <div class="bar-row"><span class="bar-label" style="width:70px">입구</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:#5DCAA5"></div></div><span class="bar-val">23건</span></div>
+            <div class="bar-row"><span class="bar-label" style="width:70px">상품진열</span><div class="bar-track"><div class="bar-fill" style="width:80%;background:#1D9E75"></div></div><span class="bar-val">34건</span></div>
+            <div class="bar-row"><span class="bar-label" style="width:70px">계산대</span><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1D9E75"></div></div><span class="bar-val">38건</span></div>
+            <div class="bar-row"><span class="bar-label" style="width:70px">주동선</span><div class="bar-track"><div class="bar-fill" style="width:40%;background:#5DCAA5"></div></div><span class="bar-val">17건</span></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-title-left">거울 효과 월간 추이</div></div>
+            <div class="bar-row"><span class="bar-label" style="width:36px">1월</span><div class="bar-track"><div class="bar-fill" style="width:70%;background:#B4B2A9"></div></div><span class="bar-val">7건</span></div>
+            <div class="bar-row"><span class="bar-label" style="width:36px">2월</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:#B4B2A9"></div></div><span class="bar-val">6건</span></div>
+            <div class="bar-row"><span class="bar-label" style="width:36px">3월</span><div class="bar-track"><div class="bar-fill" style="width:30%;background:#5DCAA5"></div></div><span class="bar-val">3건</span></div>
+            <div class="bar-row"><span class="bar-label" style="width:36px">4월</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:#1D9E75"></div></div><span class="bar-val">2건</span></div>
+            <div class="bar-row" style="opacity:0.5"><span class="bar-label" style="width:36px">5월</span><div class="bar-track"><div class="bar-fill" style="width:10%;background:#9FE1CB"></div></div><span class="bar-val">2건</span></div>
+            <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:8px">↑ 거울 도입 이후 절도 의심 건수 추이</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 포인트 현황 -->
+      <div class="page" id="page-points">
+        <div class="page-title">포인트 & 스탬프 현황</div>
+        <div class="page-sub">긍정 강화 보상 시스템 · 결제 유도 효과 추적</div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">활성 회원</div>
+            <div class="metric-value">128</div>
+            <div class="metric-sub"><span class="up">+14명</span> 이번 주</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">이번달 적립 건수</div>
+            <div class="metric-value">384</div>
+            <div class="metric-sub">스탬프 + 포인트 합산</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">보상 사용률</div>
+            <div class="metric-value">72.4%</div>
+            <div class="metric-sub"><span class="up">목표 70% 달성</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">재방문 유도율</div>
+            <div class="metric-value">4.2점</div>
+            <div class="metric-sub">5점 척도 설문 기준</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title"><div class="card-title-left"><i class="ti ti-stamp" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i>스탬프 달성 현황</div></div>
+            <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:12px">목표: 10회 스탬프 → 무료 음료 1잔</div>
+            <div class="stamp-grid">
+              <div class="stamp stamp-filled"><i class="ti ti-star" style="font-size:16px;color:#1D9E75" aria-hidden="true"></i></div>
+              <div class="stamp stamp-filled"><i class="ti ti-star" style="font-size:16px;color:#1D9E75" aria-hidden="true"></i></div>
+              <div class="stamp stamp-filled"><i class="ti ti-star" style="font-size:16px;color:#1D9E75" aria-hidden="true"></i></div>
+              <div class="stamp stamp-filled"><i class="ti ti-star" style="font-size:16px;color:#1D9E75" aria-hidden="true"></i></div>
+              <div class="stamp stamp-filled"><i class="ti ti-star" style="font-size:16px;color:#1D9E75" aria-hidden="true"></i></div>
+              <div class="stamp stamp-filled"><i class="ti ti-star" style="font-size:16px;color:#1D9E75" aria-hidden="true"></i></div>
+              <div class="stamp stamp-filled"><i class="ti ti-star" style="font-size:16px;color:#1D9E75" aria-hidden="true"></i></div>
+              <div class="stamp stamp-empty"></div>
+              <div class="stamp stamp-empty"></div>
+              <div class="stamp stamp-empty"></div>
+            </div>
+            <div style="font-size:13px;color:var(--color-text-secondary)">전체 활성 회원 기준 평균 <strong style="color:var(--color-text-primary)">7.2 / 10</strong> 스탬프 보유</div>
+          </div>
+          <div class="card">
+            <div class="card-title"><div class="card-title-left">포인트 사용 동기 분포</div></div>
+            <div class="bar-row"><span class="bar-label" style="width:72px;font-size:11px">할인 목적</span><div class="bar-track"><div class="bar-fill" style="width:78%;background:#1D9E75"></div></div><span class="bar-val">78%</span></div>
+            <div class="bar-row"><span class="bar-label" style="width:72px;font-size:11px">습관적</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:#5DCAA5"></div></div><span class="bar-val">55%</span></div>
+            <div class="bar-row"><span class="bar-label" style="width:72px;font-size:11px">재방문 목적</span><div class="bar-track"><div class="bar-fill" style="width:43%;background:#9FE1CB"></div></div><span class="bar-val">43%</span></div>
+            <div class="bar-row"><span class="bar-label" style="width:72px;font-size:11px">기타</span><div class="bar-track"><div class="bar-fill" style="width:14%;background:#D3D1C7"></div></div><span class="bar-val">14%</span></div>
+            <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:10px">사후 설문 기반 (n=89, 복수응답)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 회원 관리 -->
+      <div class="page" id="page-members">
+        <div class="page-title">회원 관리</div>
+        <div class="page-sub">포인트 적립 회원 목록 및 행동 분석</div>
+        <div class="tab-group">
+          <div class="tab active">전체 회원</div>
+          <div class="tab">우수 회원</div>
+          <div class="tab">신규 회원</div>
+        </div>
+        <div class="card">
+          <table class="user-table">
+            <thead>
+              <tr><th>순위</th><th>회원 ID</th><th>방문 횟수</th><th>스탬프</th><th>재방문 의향</th><th>상태</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="rank-badge rank-1">1</span></td><td>회원 1193</td><td>24회</td><td>10/10 ✓</td><td>⭐⭐⭐⭐⭐</td><td><span class="badge badge-green">우수</span></td></tr>
+              <tr><td><span class="rank-badge rank-2">2</span></td><td>회원 2847</td><td>18회</td><td>8/10</td><td>⭐⭐⭐⭐</td><td><span class="badge badge-green">활성</span></td></tr>
+              <tr><td><span class="rank-badge rank-3">3</span></td><td>회원 0441</td><td>15회</td><td>7/10</td><td>⭐⭐⭐⭐</td><td><span class="badge badge-green">활성</span></td></tr>
+              <tr><td><span class="rank-badge">4</span></td><td>회원 3312</td><td>11회</td><td>5/10</td><td>⭐⭐⭐</td><td><span class="badge badge-amber">보통</span></td></tr>
+              <tr><td><span class="rank-badge">5</span></td><td>회원 5599</td><td>6회</td><td>3/10</td><td>⭐⭐⭐</td><td><span class="badge badge-amber">신규</span></td></tr>
+              <tr><td><span class="rank-badge">6</span></td><td>회원 7801</td><td>2회</td><td>1/10</td><td>⭐⭐</td><td><span class="badge badge-red">이탈 위험</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 실험 검증 -->
+      <div class="page" id="page-research">
+        <div class="page-title">실험 검증 현황</div>
+        <div class="page-sub">리빙랩 디자인싱킹 · 3개 검증 가설 추적</div>
+        <div class="hypo-card">
+          <div class="hypo-header">
+            <div class="hypo-num">1</div>
+            <div class="hypo-title">스탬프 시스템을 60초 안에 이해하고 적립 완료</div>
+            <span class="badge badge-green" style="margin-left:auto">달성</span>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-track"><div class="gauge-fill gauge-green" style="width:78%"></div></div>
+            <div class="gauge-info">평균 46.8초</div>
+          </div>
+          <div class="target-line">기준: 60초 이내 완료 · Task 실패율 40% 미만</div>
+        </div>
+        <div class="hypo-card">
+          <div class="hypo-header">
+            <div class="hypo-num">2</div>
+            <div class="hypo-title">혜택 인지 후 "이 시스템 때문에 결제하겠다" 70% 이상 응답</div>
+            <span class="badge badge-green" style="margin-left:auto">달성</span>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-track"><div class="gauge-fill gauge-green" style="width:74%"></div></div>
+            <div class="gauge-info">74% 응답</div>
+          </div>
+          <div class="target-line">기준: 70% 이상 · "영향 없다" 응답 50% 미만</div>
+        </div>
+        <div class="hypo-card">
+          <div class="hypo-header">
+            <div class="hypo-num">3</div>
+            <div class="hypo-title">스탬프 가게의 재방문 의향이 기존 무인가게 대비 1점 이상 높음</div>
+            <span class="badge badge-amber" style="margin-left:auto">진행중</span>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-track"><div class="gauge-fill gauge-amber" style="width:68%"></div></div>
+            <div class="gauge-info">+0.8점 차이</div>
+          </div>
+          <div class="target-line">기준: 5점 척도에서 1점 이상 차이 · 현재 실험군 4.2점 vs 대조군 3.4점</div>
+        </div>
+        <div class="card">
+          <div class="card-title"><div class="card-title-left"><i class="ti ti-chart-bar" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i>SUS 사용성 점수</div><span class="badge badge-green">우수 수준</span></div>
+          <div style="display:flex;align-items:center;gap:24px">
+            <div style="text-align:center">
+              <div style="font-size:40px;font-weight:500;color:#1D9E75">76</div>
+              <div style="font-size:12px;color:var(--color-text-secondary)">/ 100점</div>
+            </div>
+            <div style="flex:1">
+              <div class="progress-section">
+                <div class="prog-header"><span class="prog-label" style="font-size:12px">매우 우수 (85+)</span><span class="prog-val">–</span></div>
+                <div class="prog-track"><div class="prog-fill" style="width:0%;background:#1D9E75"></div></div>
+              </div>
+              <div class="progress-section">
+                <div class="prog-header"><span class="prog-label" style="font-size:12px">우수 (72+)</span><span class="prog-val" style="color:#1D9E75">✓ 현재</span></div>
+                <div class="prog-track"><div class="prog-fill" style="width:76%;background:#1D9E75"></div></div>
+              </div>
+              <div class="progress-section" style="margin-bottom:0">
+                <div class="prog-header"><span class="prog-label" style="font-size:12px">평균 (68+)</span><span class="prog-val">기준선</span></div>
+                <div class="prog-track"><div class="prog-fill" style="width:68%;background:#D3D1C7"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 설정 -->
+      <div class="page" id="page-settings">
+        <div class="page-title">매장 설정</div>
+        <div class="page-sub">포인트 정책 및 거울 알림 관리</div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">포인트 정책</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div>
+                <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px">스탬프 보상 기준 (회)</div>
+                <input type="range" min="5" max="20" value="10" id="stamp-goal" oninput="document.getElementById('stamp-goal-out').textContent=this.value+'회'" style="width:100%">
+                <div style="font-size:13px;font-weight:500;margin-top:4px" id="stamp-goal-out">10회</div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px">보상 할인율 (%)</div>
+                <input type="range" min="5" max="50" value="20" id="discount" oninput="document.getElementById('discount-out').textContent=this.value+'%'" style="width:100%">
+                <div style="font-size:13px;font-weight:500;margin-top:4px" id="discount-out">20%</div>
+              </div>
+              <button onclick="sendPrompt('포인트 정책 변경 시 고객 행동에 어떤 영향이 있을지 분석해줘')">정책 변경 시 효과 분석 ↗</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">알림 설정</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+                <div style="font-size:13px">미결제 이탈 감지 알림</div>
+                <div style="width:36px;height:20px;background:#1D9E75;border-radius:10px;position:relative"><div style="width:16px;height:16px;background:white;border-radius:50%;position:absolute;top:2px;right:2px"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+                <div style="font-size:13px">거울 점검 필요 알림</div>
+                <div style="width:36px;height:20px;background:#1D9E75;border-radius:10px;position:relative"><div style="width:16px;height:16px;background:white;border-radius:50%;position:absolute;top:2px;right:2px"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+                <div style="font-size:13px">스탬프 달성 고객 알림</div>
+                <div style="width:36px;height:20px;background:#D3D1C7;border-radius:10px;position:relative"><div style="width:16px;height:16px;background:white;border-radius:50%;position:absolute;top:2px;left:2px"></div></div>
+              </div>
+              <button onclick="sendPrompt('무인매장 점주를 위한 추가 기능을 제안해줘')">추가 기능 제안 받기 ↗</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function navigate(page, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  el.classList.add('active');
+}
+</script>
