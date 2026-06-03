@@ -150,11 +150,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   <div class="sidebar">
     <div class="nav-section">메인</div>
     <div class="nav-item active" onclick="nav('overview',this)"><i class="ti ti-layout-dashboard"></i>개요</div>
-    <div class="nav-item" onclick="nav('mirror',this)"><i class="ti ti-mirror"></i>거울 모니터링</div>
+    <div class="nav-item" onclick="nav('mirror',this)"><i class="ti ti-mirror"></i>CCTV 모니터링</div>
     <div class="nav-item" onclick="nav('points',this)"><i class="ti ti-star"></i>포인트 현황</div>
     <div class="nav-section">분석</div>
     <div class="nav-item" onclick="nav('members',this)"><i class="ti ti-users"></i>회원 관리</div>
-    <div class="nav-item" onclick="nav('research',this)"><i class="ti ti-clipboard-data"></i>실험 검증</div>
     <div class="nav-section">설정</div>
     <div class="nav-item" onclick="nav('settings',this)"><i class="ti ti-settings"></i>설정</div>
   </div>
@@ -188,7 +187,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
           <div class="metric-sub"><span class="up">66%</span>&nbsp;방문 대비 적립률</div>
         </div>
         <div class="metric-card">
-          <div class="metric-label">거울 감지 효과</div>
+          <div class="metric-label">CCTV 감지 효과</div>
           <div class="metric-value">8</div>
           <div class="metric-sub" style="color:var(--text3)">자기인식 발동 추정 건</div>
         </div>
@@ -216,7 +215,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
             </div>
             <div class="event-item">
               <div class="event-icon ei-green"><i class="ti ti-mirror"></i></div>
-              <div><div class="event-title">거울 C3 구역 작동 확인</div><div class="event-time">13:10 · 자동 점검 완료</div></div>
+              <div><div class="event-title">CCTV C3 구역 작동 확인</div><div class="event-time">13:10 · 자동 점검 완료</div></div>
             </div>
             <div class="event-item">
               <div class="event-icon ei-green"><i class="ti ti-star"></i></div>
@@ -227,20 +226,20 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
     </div>
 
-    <!-- 거울 모니터링 -->
+    <!-- CCTV 모니터링 -->
     <div class="page" id="page-mirror">
       <div class="page-header">
-        <div class="page-title">거울 설치 모니터링</div>
+        <div class="page-title">CCTV 설치 모니터링</div>
         <div class="page-sub">자기인식 환경설계 · 설치 현황 및 효과 추적</div>
       </div>
       <div class="metrics-grid">
-        <div class="metric-card"><div class="metric-label">설치된 거울 수</div><div class="metric-value">6</div><div class="metric-sub">5개 구역 커버</div></div>
+        <div class="metric-card"><div class="metric-label">설치된 CCTV 수</div><div class="metric-value">6</div><div class="metric-sub">5개 구역 커버</div></div>
         <div class="metric-card"><div class="metric-label">정상 작동</div><div class="metric-value">5 / 6</div><div class="metric-sub"><span class="down">1개 점검 필요</span></div></div>
-        <div class="metric-card"><div class="metric-label">거울 후 결제 전환</div><div class="metric-value">+8.3%</div><div class="metric-sub"><span class="up">거울 없는 구역 대비</span></div></div>
+        <div class="metric-card"><div class="metric-label">CCTV 후 결제 전환</div><div class="metric-value">+8.3%</div><div class="metric-sub"><span class="up">CCTV 없는 구역 대비</span></div></div>
         <div class="metric-card"><div class="metric-label">이달 절도 의심</div><div class="metric-value">2건</div><div class="metric-sub"><span class="up">지난달 7건 대비 감소</span></div></div>
       </div>
       <div class="card" style="margin-bottom:16px">
-        <div class="card-title"><div class="card-title-left"><i class="ti ti-map-2"></i>구역별 거울 설치 현황</div></div>
+        <div class="card-title"><div class="card-title-left"><i class="ti ti-map-2"></i>구역별 CCTV 설치 현황</div></div>
         <div class="mirror-grid">
           <div class="mirror-card"><div class="mirror-icon"><i class="ti ti-door-enter"></i></div><div class="mirror-name">입구 A1</div><div class="mirror-status ms-on"><i class="ti ti-check" style="font-size:11px"></i>정상</div></div>
           <div class="mirror-card"><div class="mirror-icon"><i class="ti ti-shopping-cart"></i></div><div class="mirror-name">상품 진열 B2</div><div class="mirror-status ms-on"><i class="ti ti-check" style="font-size:11px"></i>정상</div></div>
@@ -259,13 +258,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
           <div class="bar-row" style="margin-bottom:0"><span class="bar-label" style="width:70px">주동선</span><div class="bar-track"><div class="bar-fill" style="width:40%;background:#9FE1CB"></div></div><span class="bar-val">17건</span></div>
         </div>
         <div class="card">
-          <div class="card-title"><div class="card-title-left">거울 도입 후 절도 의심 월별 추이</div></div>
+          <div class="card-title"><div class="card-title-left">CCTV 도입 후 절도 의심 월별 추이</div></div>
           <div class="bar-row"><span class="bar-label" style="width:36px">1월</span><div class="bar-track"><div class="bar-fill" style="width:70%;background:#B4B2A9"></div></div><span class="bar-val">7건</span></div>
           <div class="bar-row"><span class="bar-label" style="width:36px">2월</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:#B4B2A9"></div></div><span class="bar-val">6건</span></div>
           <div class="bar-row"><span class="bar-label" style="width:36px">3월</span><div class="bar-track"><div class="bar-fill" style="width:30%;background:#9FE1CB"></div></div><span class="bar-val">3건</span></div>
           <div class="bar-row"><span class="bar-label" style="width:36px">4월</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--green)"></div></div><span class="bar-val">2건</span></div>
           <div class="bar-row" style="margin-bottom:4px"><span class="bar-label" style="width:36px">5월</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--green)"></div></div><span class="bar-val">2건</span></div>
-          <div style="font-size:11px;color:var(--text3)">↓ 거울 도입 이후 절도 의심 건수 지속 감소</div>
+          <div style="font-size:11px;color:var(--text3)">↓ CCTV 도입 이후 절도 의심 건수 지속 감소</div>
         </div>
       </div>
     </div>
@@ -334,78 +333,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
     </div>
 
-    <!-- 실험 검증 -->
-    <div class="page" id="page-research">
-      <div class="page-header">
-        <div class="page-title">실험 검증 현황</div>
-        <div class="page-sub">리빙랩 디자인싱킹 · 3개 검증 가설 추적</div>
-      </div>
-      <div class="hypo-card">
-        <div class="hypo-header">
-          <div class="hypo-num">1</div>
-          <div class="hypo-title">스탬프 시스템을 60초 안에 이해하고 적립 완료</div>
-          <span class="badge badge-green" style="flex-shrink:0">달성</span>
-        </div>
-        <div class="gauge-row">
-          <div class="gauge-track"><div class="gauge-fill g-green" style="width:78%"></div></div>
-          <div class="gauge-info">평균 46.8초</div>
-        </div>
-        <div class="target-line">기준: 60초 이내 완료 · Task 실패율 40% 미만</div>
-      </div>
-      <div class="hypo-card">
-        <div class="hypo-header">
-          <div class="hypo-num">2</div>
-          <div class="hypo-title">혜택 인지 후 "이 시스템 때문에 결제하겠다" 70% 이상 응답</div>
-          <span class="badge badge-green" style="flex-shrink:0">달성</span>
-        </div>
-        <div class="gauge-row">
-          <div class="gauge-track"><div class="gauge-fill g-green" style="width:74%"></div></div>
-          <div class="gauge-info">74% 응답</div>
-        </div>
-        <div class="target-line">기준: 70% 이상 · "영향 없다" 응답 50% 미만</div>
-      </div>
-      <div class="hypo-card">
-        <div class="hypo-header">
-          <div class="hypo-num">3</div>
-          <div class="hypo-title">스탬프 가게의 재방문 의향이 기존 무인가게 대비 1점 이상 높음</div>
-          <span class="badge badge-amber" style="flex-shrink:0">진행중</span>
-        </div>
-        <div class="gauge-row">
-          <div class="gauge-track"><div class="gauge-fill g-amber" style="width:68%"></div></div>
-          <div class="gauge-info">+0.8점 차이</div>
-        </div>
-        <div class="target-line">기준: 5점 척도에서 1점 이상 차이 · 현재 실험군 4.2점 vs 대조군 3.4점</div>
-      </div>
-      <div class="card">
-        <div class="card-title"><div class="card-title-left"><i class="ti ti-chart-bar"></i>SUS 사용성 점수</div><span class="badge badge-green">우수 수준</span></div>
-        <div class="sus-block">
-          <div class="sus-score">
-            <div class="sus-num">76</div>
-            <div class="sus-denom">/ 100점</div>
-          </div>
-          <div style="flex:1">
-            <div class="prog-item">
-              <div class="prog-header"><span class="prog-label">매우 우수 (85점 이상)</span><span class="prog-val">미달성</span></div>
-              <div class="prog-track"><div class="prog-fill prog-fill-gray" style="width:85%"></div></div>
-            </div>
-            <div class="prog-item">
-              <div class="prog-header"><span class="prog-label">우수 (72점 이상)</span><span class="prog-val" style="color:var(--green)">✓ 현재 76점</span></div>
-              <div class="prog-track"><div class="prog-fill" style="width:76%"></div></div>
-            </div>
-            <div class="prog-item" style="margin-bottom:0">
-              <div class="prog-header"><span class="prog-label">평균 (68점 이상)</span><span class="prog-val">기준선</span></div>
-              <div class="prog-track"><div class="prog-fill prog-fill-gray" style="width:68%"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- 설정 -->
     <div class="page" id="page-settings">
       <div class="page-header">
         <div class="page-title">매장 설정</div>
-        <div class="page-sub">포인트 정책 및 거울 알림 관리</div>
+        <div class="page-sub">포인트 정책 및 CCTV 알림 관리</div>
       </div>
       <div class="grid-2">
         <div class="card">
@@ -440,7 +373,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
             <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
           </div>
           <div class="toggle-row">
-            <div class="toggle-label"><i class="ti ti-mirror" style="font-size:15px;vertical-align:-2px;margin-right:6px"></i>거울 점검 필요 알림</div>
+            <div class="toggle-label"><i class="ti ti-mirror" style="font-size:15px;vertical-align:-2px;margin-right:6px"></i>CCTV 점검 필요 알림</div>
             <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
           </div>
           <div class="toggle-row">
